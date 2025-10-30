@@ -1,0 +1,14 @@
+{
+  "name": "scrydle-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "local": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.35.6",
+    "@vercel/kv": "latest",
+    "redis": "^5.9.0"
+  }
+}

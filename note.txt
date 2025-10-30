@@ -1,0 +1,25 @@
+| Endpoint                           | Purpose                                                                                         | What it Returns                                                                                                         |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **`/api/today-card?mode=<mode>`**  | Get today’s stored card for a specific game mode (uses cache so all players see the same card). | A **card object** → `{ mode, source, id, name, set, set_name, mana_cost, type_line, oracle_text, image, scryfall_uri }` |
+| **`/api/cron-pick-card`**          | (Runs once per day by cron) Picks a new random card for **each mode** and saves them in cache.  | `{ ok: true, classic: {...}, art: {...}, commander: {...}, mono: {...}, planeswalker: {...} }`                          |
+| **`/api/random-card?mode=<mode>`** | Always returns a brand-new random card — doesn’t cache (used for “Win the Card” mode).          | Same **card object** as above, but `source: "live"`                                                                     |
+
+
+// Get today’s Classic card
+const res = await fetch("/api/today-card?mode=classic");
+const card = await res.json();
+
+// Example shape:
+{
+  mode: "classic",
+  source: "cache",     // or "live+cached"
+  name: "Serra Angel",
+  type_line: "Creature — Angel",
+  image: "https://cards.scryfall.io/normal/front/...",
+  oracle_text: "Flying, vigilance",
+  scryfall_uri: "https://scryfall.com/card/m10/28/serra-angel"
+}
+
+
+Use the same call but change mode= for each game mode.
+Use /api/random-card?mode=win for “Guess the Card / Win the Card.”
