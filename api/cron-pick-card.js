@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { MODE_QUERIES, scryfallRandomUrl, trimCard } from "./_lib";
+import { MODE_QUERIES, scryfallRandomUrl, trimCard } from "./_lib.js";
 
 const redis = new Redis({
     url: process.env.scrydle_KV_REST_API_URL ||

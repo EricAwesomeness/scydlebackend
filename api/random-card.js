@@ -1,5 +1,5 @@
 // /api/random-card.js
-import { MODE_QUERIES, getMode, scryfallRandomUrl, trimCard } from "./_lib";
+import { MODE_QUERIES, getMode, scryfallRandomUrl, trimCard } from "./_lib.js";
 
 export default async function handler(req, res) {
     const mode = getMode(req);

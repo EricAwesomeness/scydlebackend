@@ -1,15 +1,15 @@
+// api/_lib.js
 export const MODE_QUERIES = {
     classic: null,
     art: null,
     commander: "is:commander",
     mono: "(id=w OR id=u OR id=b OR id=r OR id=g)",
     planeswalker: "type:planeswalker",
-    win: null
+    win: null,
 };
 
 export function getMode(req) {
-    const m = (req.query?.mode || req.url?.split("mode=")[1] || "classic")
-        .split("&")[0]
+    const m = (new URL(req.url, "http://x").searchParams.get("mode") || "classic")
         .toLowerCase();
     return MODE_QUERIES[m] !== undefined ? m : "classic";
 }
@@ -29,6 +29,6 @@ export function trimCard(card) {
         type_line: card.type_line ?? null,
         oracle_text: card.oracle_text ?? null,
         image: card.image_uris?.normal ?? card.image_uris?.png ?? null,
-        scryfall_uri: card.scryfall_uri
+        scryfall_uri: card.scryfall_uri,
     };
 }
