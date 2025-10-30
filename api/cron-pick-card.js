@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { MODE_QUERIES, scryfallRandomUrl, trimCard } from "./_lib.js";
+import { MODE_QUERIES, scryfallRandomUrl } from "./_lib.js";
 
 const redis = new Redis({
     url: process.env.scrydle_KV_REST_API_URL ||
@@ -19,7 +19,7 @@ export default async function handler(_req, res) {
                 headers: { "User-Agent": "Scrydle/1.0 (cron)" },
             });
             if (!r.ok) throw new Error(`Scryfall ${r.status} for mode ${mode}`);
-            const card = trimCard(await r.json());
+            const card = await r.json();              // ← full payload
             const key = `scrydle:card:${today}:${mode}`;
             await redis.set(key, card, { ex: 60 * 60 * 36 });
             results[mode] = { date: today, name: card.name };
